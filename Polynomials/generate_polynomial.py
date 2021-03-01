@@ -33,7 +33,7 @@ def generate_polynomial (keys):
     # Adding the group key to the polynomial
     polynomial[0] += group_key
 
-    print("Polynomial generated : ", polynomial)
+    print("Polynomial generated : ", polynomial, "\n")
 
     return polynomial
 

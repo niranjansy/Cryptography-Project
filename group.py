@@ -28,7 +28,7 @@ class Group():
         if member_group is not None:
             print("\nMember {} already part of Group {}".format(member_id, member_group))
             print("\nCannot add member") 
-            return
+            return False
 
         print("\n****** Printing re-keying process *******")
 
@@ -45,6 +45,8 @@ class Group():
         self.group_polynomial = generate_polynomial(self.secret_keys)
         self.group_key = evaluate_polynomial(self.group_polynomial, member_key)
 
+        return True
+
     def remove_member(self, member_id):
         """
         This function removes a member with given id from the group. 
@@ -54,10 +56,10 @@ class Group():
         if member_id not in self.members.keys():
             print("\nMember {} is not part of Group {}".format(member_id, self.id))
             print("\nCannot remove member") 
-            return
+            return False
         if(member_id == self.admin_id):
             print("Admin of group cannot be removed")
-            return 
+            return False
         
         print("\n****** Printing re-keying process *******")
 
@@ -65,21 +67,26 @@ class Group():
         member.set_group_id(None)
         self.secret_keys.remove(member.secret_key)
         
-        print("\nMember {} with secret key {} removed from Group {}.".format(member_id, member.secret_key, self.id))
+        print("\nMember {} with secret key {} removed from Group {}.\n".format(member_id, member.secret_key, self.id))
         
         self.group_polynomial = generate_polynomial(self.secret_keys)
         self.group_key = evaluate_polynomial(self.group_polynomial, self.secret_keys[0])
+
+        return True
 
     def print_members_list(self):
         
         print("\n****** Printing group members *******")
 
         member_ids = [i for i in self.members.keys()]
-        print("\nThe members in the group are : ", member_ids)
+        print("\nThe members in the group are : ", member_ids, "\n")
 
     def get_group_polynomial(self):
         return self.group_polynomial
+
+    def get_group_key(self):
+        return self.group_key
     
-    def add_message_to_group(self,encrypted_message):
-        print("\nAdding encrypted message : ",encrypted_message ," to group\n")
+    def add_message_to_group(self, encrypted_message):
+        print("\nAdding encrypted message : ", encrypted_message, " to group\n")
         self.messages.append(encrypted_message)

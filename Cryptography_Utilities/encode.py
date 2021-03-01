@@ -22,7 +22,7 @@ def encode(s):
     print("***** Encoding Process ******")
     print("String to encode : " + s)
     print("Encoded string : " + str(encoded_binary_string))
-    print("*****************************")
+    print("*****************************\n")
 
     """Returning the encoded string"""
 

@@ -25,7 +25,7 @@ def encrypt(binary_string,key):
     
     print("Encrypted String : " + encrypted_string)
 
-    print("************************************")
+    print("************************************\n")
     
     """Returning the encrypted string""" 
 

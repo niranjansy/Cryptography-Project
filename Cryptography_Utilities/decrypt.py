@@ -23,7 +23,7 @@ def decrypt(binary_string,key):
         ptr=ptr+1
     
     print("Decrypted String : " + decrypted_string)
-    print("************************************")
+    print("************************************\n")
 
     """Returning decrypted string"""
 

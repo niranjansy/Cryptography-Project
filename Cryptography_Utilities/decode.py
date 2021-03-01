@@ -17,7 +17,7 @@ def decode(s):
     print("***** Decoding Process ******")
     print("Binary string to decode : " + s)
     print("decoded string : " + decoded_string)
-    print("*****************************")
+    print("*****************************\n")
 
     """Returning the decoded string"""
 
