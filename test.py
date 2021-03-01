@@ -12,14 +12,13 @@ m2 = Member(id='Bob', secret_key=37)
 g.add_member(m1)
 g.add_member(m2)
 
-# Get group key
-gk = g.get_group_key()
-print("\n****** Group key is : {} ******".format(gk))
+g.remove_member(m1.id) # should not be possible becuse admin cant be removed
+g.remove_member(m2.id) # should be possible
+
 
 # Get members list
 g.print_members_list()
 
 # Remove member
-g.remove_member(member_id='Bob')
-
+g.remove_member(member_id='Bob') # this should show not possible
 

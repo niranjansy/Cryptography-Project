@@ -10,7 +10,9 @@ class Group():
         self.members = {} # dictionary for stroring (member_id, member object)
         self.secret_keys = [] # list of all secret keys
         self.group_polynomial = None
+        self.messages = [] # stores all messages in encrypted form
         self.group_key = None
+        self.admin_id = None
 
         print("\nGroup {} created.".format(self.id))
 
@@ -36,6 +38,10 @@ class Group():
 
         print("\nMember {} with secret key {} added to Group {}.".format(member_id, member_key, self.id))
         
+        if(len(self.secret_keys) == 1):
+            print("\nMaking ",member_id," the admin of the group: ",self.id,"\n")
+            self.admin_id = member_id
+
         self.group_polynomial = generate_polynomial(self.secret_keys)
         self.group_key = evaluate_polynomial(self.group_polynomial, member_key)
 
@@ -49,7 +55,10 @@ class Group():
             print("\nMember {} is not part of Group {}".format(member_id, self.id))
             print("\nCannot remove member") 
             return
-
+        if(member_id == self.admin_id):
+            print("Admin of group cannot be removed")
+            return 
+        
         print("\n****** Printing re-keying process *******")
 
         member = self.members.pop(member_id)
@@ -68,5 +77,9 @@ class Group():
         member_ids = [i for i in self.members.keys()]
         print("\nThe members in the group are : ", member_ids)
 
-    def get_group_key(self):
-        return self.group_key
+    def get_group_polynomial(self):
+        return self.group_polynomial
+    
+    def add_message_to_group(self,encrypted_message):
+        print("\nAdding encrypted message : ",encrypted_message ," to group\n")
+        self.messages.append(encrypted_message)
