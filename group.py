@@ -2,6 +2,7 @@ from Polynomials.generate_polynomial import generate_polynomial
 from Polynomials.generate_polynomial import gen_intergroup_polynomial
 from Polynomials.evaluate_polynomial import evaluate_polynomial
 from Cryptography_Utilities.encrypt_polynomial import encrypt_polynomial
+from Cryptography_Utilities.decrypt_polynomial import decrypt_polynomial
 # import member
 
 class Group():
@@ -14,7 +15,6 @@ class Group():
         self.group_polynomial = None
         self.intergroup_polynomial = None
         self.messages = [] # stores all messages in encrypted form
-        self.group_key = None
         self.admin_id = None
 
         print("\nGroup {} created.".format(self.id))
@@ -47,11 +47,11 @@ class Group():
 
         # Generating new group polynomial and new group key
         self.group_polynomial = generate_polynomial(self.secret_keys)
-        self.group_key = evaluate_polynomial(self.group_polynomial, member_key)
 
         # Generating new intergroup polynomial
+        group_key = evaluate_polynomial(self.group_polynomial, self.secret_keys[0])
         intergroup_polynomial = gen_intergroup_polynomial(len(self.secret_keys))
-        encrpyted_intergroup_polynomial = encrypt_polynomial(intergroup_polynomial, self.group_key)
+        encrpyted_intergroup_polynomial = encrypt_polynomial(intergroup_polynomial, group_key)
         self.intergroup_polynomial = encrpyted_intergroup_polynomial
         print("\nEncrypted Inter Group Polynomial : {}\n".format(self.intergroup_polynomial))
 
@@ -81,11 +81,11 @@ class Group():
         
         # Generating new group polynomial and new group key
         self.group_polynomial = generate_polynomial(self.secret_keys)
-        self.group_key = evaluate_polynomial(self.group_polynomial, self.secret_keys[0])
 
         # Generating new intergroup polynomial 
+        group_key = evaluate_polynomial(self.group_polynomial, self.secret_keys[0])
         intergroup_polynomial = gen_intergroup_polynomial(len(self.secret_keys))
-        encrpyted_intergroup_polynomial = encrypt_polynomial(intergroup_polynomial, self.group_key)
+        encrpyted_intergroup_polynomial = encrypt_polynomial(intergroup_polynomial, group_key)
         self.intergroup_polynomial = encrpyted_intergroup_polynomial
         print("\nEncrypted Inter Group Polynomial : {}\n".format(self.intergroup_polynomial))
 
@@ -100,10 +100,7 @@ class Group():
 
     def get_group_polynomial(self):
         return self.group_polynomial
-
-    def get_group_key(self):
-        return self.group_key
     
     def add_message_to_group(self, encrypted_message):
         print("\nAdding encrypted message : ", encrypted_message, " to group\n")
-        self.messages.append(encrypted_message)
+        self.messages.append(encrypted_message)    

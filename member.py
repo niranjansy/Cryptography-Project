@@ -2,6 +2,7 @@ from Cryptography_Utilities.encode import encode
 from Cryptography_Utilities.encrypt import encrypt
 from Cryptography_Utilities.decode import decode
 from Cryptography_Utilities.decrypt import decrypt
+from Polynomials.evaluate_polynomial import evaluate_polynomial
 
 class Member():
 
@@ -32,7 +33,8 @@ class Member():
 
         print("Message being written by member {} to group {}: {}\n".format(self.id, group.id, message))
 
-        group_key = group.get_group_key()
+        group_polynomial = group.get_group_polynomial()
+        group_key = evaluate_polynomial(group_polynomial, self.secret_key)
         encoded_message = encode(message)
         encoded_key = str(bin(group_key)[2:])
         encrypted_message = encrypt(encoded_message, encoded_key)
@@ -57,7 +59,8 @@ class Member():
             print("No messages have been sent to the group.\n")
             return False
 
-        group_key = group.get_group_key()
+        group_polynomial = group.get_group_polynomial()
+        group_key = evaluate_polynomial(group_polynomial, self.secret_key)
         encoded_key = str(bin(group_key)[2:])
         encrypted_message = group.messages[-1]
         decrypted_message = decrypt(encrypted_message, encoded_key)
