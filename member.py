@@ -3,6 +3,7 @@ from Cryptography_Utilities.encrypt import encrypt
 from Cryptography_Utilities.decode import decode
 from Cryptography_Utilities.decrypt import decrypt
 from Polynomials.evaluate_polynomial import evaluate_polynomial
+from Cryptography_Utilities.decrypt_polynomial import decrypt_polynomial
 
 class Member():
 
@@ -28,19 +29,33 @@ class Member():
         """
 
         if self.group_id != group.id:
-            print("You are not a member of group ", group.id, "!! \nCannot add messages to the group!!\n")
-            return False
+            """
+            Inter Group Message
+            """
+            print("Sending inter-group message from member {} to group {}: {}\n".format(self.id, group.id, message))
+            
+            key = group.request_intergroup_key(self.id)
+            encoded_key = str(bin(key)[2:])
+            encoded_message = encode(message)
+            encrypted_message = encrypt(encoded_message, encoded_key)
+            group.add_intergroup_message(encrypted_message, self.id)
 
-        print("Message being written by member {} to group {}: {}\n".format(self.id, group.id, message))
+            print("Message has been sent to the group successfully.\n")
 
-        group_polynomial = group.get_group_polynomial()
-        group_key = evaluate_polynomial(group_polynomial, self.secret_key)
-        encoded_message = encode(message)
-        encoded_key = str(bin(group_key)[2:])
-        encrypted_message = encrypt(encoded_message, encoded_key)
-        group.add_message_to_group(encrypted_message)
+        else:
+            """
+            Intra Group Message
+            """
+            print("Sending intra-group message from member {} to group {}: {}\n".format(self.id, group.id, message))
 
-        print("Message has been added to the group successfully.\n")
+            group_polynomial = group.get_group_polynomial()
+            group_key = evaluate_polynomial(group_polynomial, self.secret_key)
+            encoded_message = encode(message)
+            encoded_key = str(bin(group_key)[2:])
+            encrypted_message = encrypt(encoded_message, encoded_key)
+            group.add_message_to_group(encrypted_message)
+
+            print("Message has been added to the group successfully.\n")
 
         return True
 
@@ -68,9 +83,40 @@ class Member():
 
         print("Message read by member {}: {}\n".format(self.id, decoded_message))
 
-        self.message_history.append((decoded_message, group.id))
+        self.message_history.append((decoded_message, "Intra-Group"))
 
         return True
+
+    def read_latest_intergroup_message(self, group):
+        """
+        This is a function for a member to read the latest message that has been sent to his group from members outside his group. 
+        Once a message has been added to a group successfully, this function must be called for every member of that group. 
+        """
+
+        if self.group_id != group.id:
+            print("You are not a member of group ", group.id, "!! \nCannot read messages of the group!!\n")
+            return False
+
+        if len(group.intergroup_messages) == 0:
+            print("No messages have been sent to the group.\n")
+            return False
+
+        encrypted_message = group.intergroup_messages[-1][0]
+        sender_id = group.intergroup_messages[-1][1]
+        group_polynomial = group.get_group_polynomial()
+        group_key = evaluate_polynomial(group_polynomial, self.secret_key)
+        intergroup_polynomial = decrypt_polynomial(group.intergroup_polynomial, group_key)
+        key = evaluate_polynomial(intergroup_polynomial, sender_id)
+        encoded_key = str(bin(key)[2:])
+        decrypted_message = decrypt(encrypted_message, encoded_key)
+        decoded_message = decode(decrypted_message)
+
+        print("Message read by member {}: {}\n".format(self.id, decoded_message))
+
+        self.message_history.append((decoded_message, sender_id))
+
+        return True
+
 
     def add_member_to_group(self, member, group):
 

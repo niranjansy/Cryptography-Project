@@ -10,11 +10,12 @@ class Group():
     def __init__(self, id):
 
         self.id = id
-        self.members = {} # dictionary for stroring (member_id, member object)
+        self.members = {} # dictionary for storing (member_id, member object)
         self.secret_keys = [] # list of all secret keys
         self.group_polynomial = None
         self.intergroup_polynomial = None
-        self.messages = [] # stores all messages in encrypted form
+        self.messages = [] # stores all intra-group messages in encrypted form
+        self.intergroup_messages = []   # stores encrypted messages from members ouside the group, in the form of pairs - (encrypted_message, sender_id)
         self.admin_id = None
 
         print("\nGroup {} created.".format(self.id))
@@ -104,3 +105,21 @@ class Group():
     def add_message_to_group(self, encrypted_message):
         print("\nAdding encrypted message : ", encrypted_message, " to group\n")
         self.messages.append(encrypted_message)    
+
+    def request_intergroup_key(self, member_id):
+        """
+        This function returns an inter-group key, 
+        when a member outside the group requests for the key to send a message to the group.
+        """
+
+        group_key = evaluate_polynomial(self.group_polynomial, self.secret_keys[0])
+        decrypted_polynomial = decrypt_polynomial(self.intergroup_polynomial, group_key)
+        intergroup_key = evaluate_polynomial(decrypted_polynomial, member_id)
+        print("Evaluated inter group key : ", intergroup_key)
+
+        return intergroup_key
+
+    def add_intergroup_message(self, encrypted_message, member_id):
+        print("\nAdding encrypted message {} from member {} to the group\n".format(encrypted_message, member_id))
+        self.intergroup_messages.append((encrypted_message, member_id))
+

@@ -43,7 +43,7 @@ def gen_intergroup_polynomial(degree):
     """
     polynomial = []
     for i in range(degree+1):
-        polynomial.append(random.randint(-1000, 1000))
+        polynomial.append(random.randint(0, 1000))
     
     print("Intergroup polynomial generated : ", polynomial, "\n")
     
