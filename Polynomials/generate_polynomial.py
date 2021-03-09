@@ -37,6 +37,20 @@ def generate_polynomial (keys):
 
     return polynomial
 
+def gen_intergroup_polynomial(degree):
+    """
+    This function generates a random polynomial of given degree.
+    """
+    polynomial = []
+    for i in range(degree+1):
+        polynomial.append(random.randint(-1000, 1000))
+    
+    print("Intergroup polynomial generated : ", polynomial, "\n")
+    
+    return polynomial
 
+# For testing uncomment below lines
 # polynomial = generate_polynomial([1, 2, 3])
+# degree =  len(polynomial)-1
+# intergroup_polynomial = gen_intergroup_polynomial(degree)
 
