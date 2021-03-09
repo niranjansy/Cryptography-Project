@@ -1,5 +1,8 @@
-from encrypt import encrypt
-from encode import encode
+from Cryptography_Utilities.encrypt import encrypt
+from Cryptography_Utilities.encode import encode
+# Uncomment the below 2 lines and comment the above 2 lines for running test_polynomial.py
+# from encrypt import encrypt   
+# from encode import encode
 
 def encrypt_polynomial(polynomial, key):
     """

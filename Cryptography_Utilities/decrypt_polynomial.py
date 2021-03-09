@@ -1,5 +1,8 @@
-from decode import decode
-from decrypt import decrypt
+from Cryptography_Utilities.decode import decode
+from Cryptography_Utilities.decrypt import decrypt
+# Uncomment the below 2 lines and comment the above 2 lines for running test_polynomial.py
+# from decode import decode
+# from decrypt import decrypt
 
 def decrypt_polynomial(encrypted_string, key):
     """

@@ -1,6 +1,8 @@
 from Polynomials.generate_polynomial import generate_polynomial
+from Polynomials.generate_polynomial import gen_intergroup_polynomial
 from Polynomials.evaluate_polynomial import evaluate_polynomial
-import member
+from Cryptography_Utilities.encrypt_polynomial import encrypt_polynomial
+# import member
 
 class Group():
     
@@ -10,6 +12,7 @@ class Group():
         self.members = {} # dictionary for stroring (member_id, member object)
         self.secret_keys = [] # list of all secret keys
         self.group_polynomial = None
+        self.intergroup_polynomial = None
         self.messages = [] # stores all messages in encrypted form
         self.group_key = None
         self.admin_id = None
@@ -42,8 +45,15 @@ class Group():
             print("\nMaking ",member_id," the admin of the group: ",self.id,"\n")
             self.admin_id = member_id
 
+        # Generating new group polynomial and new group key
         self.group_polynomial = generate_polynomial(self.secret_keys)
         self.group_key = evaluate_polynomial(self.group_polynomial, member_key)
+
+        # Generating new intergroup polynomial
+        intergroup_polynomial = gen_intergroup_polynomial(len(self.secret_keys))
+        encrpyted_intergroup_polynomial = encrypt_polynomial(intergroup_polynomial, self.group_key)
+        self.intergroup_polynomial = encrpyted_intergroup_polynomial
+        print("\nEncrypted Inter Group Polynomial : {}\n".format(self.intergroup_polynomial))
 
         return True
 
@@ -69,8 +79,15 @@ class Group():
         
         print("\nMember {} with secret key {} removed from Group {}.\n".format(member_id, member.secret_key, self.id))
         
+        # Generating new group polynomial and new group key
         self.group_polynomial = generate_polynomial(self.secret_keys)
         self.group_key = evaluate_polynomial(self.group_polynomial, self.secret_keys[0])
+
+        # Generating new intergroup polynomial 
+        intergroup_polynomial = gen_intergroup_polynomial(len(self.secret_keys))
+        encrpyted_intergroup_polynomial = encrypt_polynomial(intergroup_polynomial, self.group_key)
+        self.intergroup_polynomial = encrpyted_intergroup_polynomial
+        print("\nEncrypted Inter Group Polynomial : {}\n".format(self.intergroup_polynomial))
 
         return True
 
