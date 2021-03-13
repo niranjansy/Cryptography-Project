@@ -66,7 +66,7 @@ def get_printable(polynomial):
     return string
 
 # For testing uncomment below lines
-polynomial = generate_polynomial([1, 2, 3])
-degree =  len(polynomial)-1
-intergroup_polynomial = gen_intergroup_polynomial(degree)
+# polynomial = generate_polynomial([1, 2, 3])
+# degree =  len(polynomial)-1
+# intergroup_polynomial = gen_intergroup_polynomial(degree)
 
