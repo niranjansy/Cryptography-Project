@@ -33,7 +33,7 @@ def generate_polynomial (keys):
     # Adding the group key to the polynomial
     polynomial[0] += group_key
 
-    print("Polynomial generated : ", polynomial, "\n")
+    print("Group polynomial generated : ", get_printable(polynomial), "\n")
 
     return polynomial
 
@@ -45,12 +45,28 @@ def gen_intergroup_polynomial(degree):
     for i in range(degree+1):
         polynomial.append(random.randint(0, 1000))
     
-    print("Intergroup polynomial generated : ", polynomial, "\n")
+    print("Intergroup polynomial generated : ", get_printable(polynomial), "\n")
     
     return polynomial
 
+def get_printable(polynomial):
+    """
+    This function takes in a list of coefficients representing a polynomial
+    and returns a string for printing in proper format
+    """
+    string = ""
+    for i, coeff in reversed(list(enumerate(polynomial))):
+        if (coeff>0):
+            string += (" + " + str(coeff) + "x^" + str(i))
+        else:
+            string += (" - " + str(abs(coeff)) + "x^" + str(i))
+    l = len(string)
+    string = string[3:l-3]
+
+    return string
+
 # For testing uncomment below lines
-# polynomial = generate_polynomial([1, 2, 3])
-# degree =  len(polynomial)-1
-# intergroup_polynomial = gen_intergroup_polynomial(degree)
+polynomial = generate_polynomial([1, 2, 3])
+degree =  len(polynomial)-1
+intergroup_polynomial = gen_intergroup_polynomial(degree)
 
