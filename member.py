@@ -127,7 +127,7 @@ class Member():
         """
 
         if self.id != group.admin_id:
-            print("You are not an admin of the group!! \nCannot add the member to the group!!\n")
+            print("You are not the admin of the group!! \nCannot add the member to the group!!\n")
             return False
 
         if not group.add_member(member):
@@ -142,7 +142,7 @@ class Member():
         """
 
         if self.id != group.admin_id:
-            print("You are not an admin of the group!! \nCannot remove the member from the group!!\n")
+            print("You are not the admin of the group!! \nCannot remove the member from the group!!\n")
             return False
 
         if not group.remove_member(member.id):
