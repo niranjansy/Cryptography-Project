@@ -3,6 +3,13 @@
 # The polynomial is returned as a list of coefficients
 
 import random 
+from absl import app
+from absl import flags
+
+FLAGS = flags.FLAGS
+
+flags.DEFINE_integer('l',None,'lower bound for keys')
+flags.DEFINE_integer('h',None,'upper bound for keys')
 
 def generate_polynomial (keys):
 
@@ -28,7 +35,7 @@ def generate_polynomial (keys):
     # print("Polynomial generated : ", polynomial)
 
     # Randomly generating a group key 
-    group_key = int(random.random() * 100)      # Generating a random number between 0 and 100. The range can be changed later.
+    group_key = random.randint(2**FLAGS.l, 2**FLAGS.h)      # Generating a random number between 0 and 100. The range can be changed later.
     print("Group key generated using random number generator : ", group_key)
     # Adding the group key to the polynomial
     polynomial[0] += group_key
@@ -43,7 +50,7 @@ def gen_intergroup_polynomial(degree):
     """
     polynomial = []
     for i in range(degree+1):
-        polynomial.append(random.randint(0, 1000))
+        polynomial.append(random.randint(2**FLAGS.l, 2**FLAGS.h))
     
     print("Intergroup polynomial generated : ", get_printable(polynomial), "\n")
     
