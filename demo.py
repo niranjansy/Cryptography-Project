@@ -91,11 +91,15 @@ def main(argv):
                     """
                     Adding a member to a group. This is possible only for a group admin.
                     """
-                    g = int(input("Select group : "))
-                    m = int(input("Select member : "))
-                    if g not in groups.keys() or m not in members.keys():
-                        print("Invalid Group or Member ID entered!!")
+                    if member.group_id == None:
+                        print("\nYou are not a member of any group!!")
                         continue
+
+                    m = int(input("Select member : "))
+                    if m not in members.keys():
+                        print("Invalid Member ID entered!!")
+                        continue
+                    g = member.group_id
                     group = groups[g]
                     mem = members[m]
                     member.add_member_to_group(mem, group)
@@ -104,11 +108,14 @@ def main(argv):
                     """
                     Removing a member from a group. This is possible only for a group admin
                     """
-                    g = int(input("Select group : "))
-                    m = int(input("Select member : "))
-                    if g not in groups.keys() or m not in members.keys():
-                        print("Invalid Group or Member ID entered!!")
+                    if member.group_id == None:
+                        print("\nYou are not a member of any group!!")
                         continue
+                    m = int(input("Select member : "))
+                    if m not in members.keys():
+                        print("Invalid Member ID entered!!")
+                        continue
+                    g = member.group_id
                     group = groups[g]
                     mem = members[m]
                     member.remove_member_from_group(mem, group)
