@@ -30,16 +30,16 @@ def main(argv):
 
         if choice == '1':
             """
-            Adding a new member.
+            Creating a new member.
             """
             print("\n******** Creating Member ********\n")
             mem_id = len(members) + 1
             # key = int(input("Choose a secret key for the member : "))
-            key = random.randint(2**FLAGS.l, 2**FLAGS.h)
-            m = Member(id=mem_id, secret_key=key)
+            # key = random.randint(2**FLAGS.l, 2**FLAGS.h)
+            m = Member(id=mem_id)
             members[mem_id] = m
             print("Member created with member id : ", mem_id)
-            print("Your secret key is {}. Do not share it with anyone.".format(key))
+            # print("Your secret key is {}. Do not share it with anyone.".format(key))
             print("\n******** Done ********\n")
 
         elif choice == '2':

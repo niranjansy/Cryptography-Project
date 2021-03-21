@@ -5,6 +5,12 @@ from Cryptography_Utilities.encrypt_polynomial import encrypt_polynomial
 from Cryptography_Utilities.decrypt_polynomial import decrypt_polynomial
 # import member
 
+from absl import app
+from absl import flags
+import random
+
+FLAGS = flags.FLAGS
+
 class Group():
     
     def __init__(self, id):
@@ -26,7 +32,6 @@ class Group():
         It generates a new group key and a new group polynomial.
         """
         member_id = member.id
-        member_key = member.secret_key
         member_group = member.group_id
 
         if member_group is not None:
@@ -36,14 +41,16 @@ class Group():
 
         print("\n****** Printing re-keying process *******")
 
-        self.members[member_id] = member
+        member_key = random.randint(2**FLAGS.l, 2**FLAGS.h)
         member.set_group_id(self.id)
+        member.set_secret_key(member_key)
+        self.members[member_id] = member
         self.secret_keys.append(member_key)
 
         print("\nMember {} with secret key {} added to Group {}.".format(member_id, member_key, self.id))
         
         if(len(self.secret_keys) == 1):
-            print("\nMaking ",member_id," the admin of the group: ",self.id,"\n")
+            print("\nMaking ",member_id," the admin of the group ", self.id,"\n")
             self.admin_id = member_id
 
         # Generating new group polynomial and new group key
