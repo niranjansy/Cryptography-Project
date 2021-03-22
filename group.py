@@ -123,7 +123,7 @@ class Group():
         group_key = evaluate_polynomial(self.group_polynomial, self.secret_keys[0])
         decrypted_polynomial = decrypt_polynomial(self.intergroup_polynomial, group_key)
         intergroup_key = evaluate_polynomial(decrypted_polynomial, member_id)
-        print(bcolors.BOLD + bcolors.OKGREEN + "Evaluated inter group key : " + bcolors.ENDC + intergroup_key)
+        print(bcolors.BOLD + bcolors.OKGREEN + "Evaluated inter group key : " + bcolors.ENDC + str(intergroup_key))
 
         return intergroup_key
 

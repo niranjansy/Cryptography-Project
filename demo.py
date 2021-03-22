@@ -40,7 +40,7 @@ def main(argv):
             m = Member(id=mem_id)
             members[mem_id] = m
             print("Member created with member id : ", mem_id)
-            print(bcolors.BOLD + bcolors.OKBLUE + "Your secret key is {}. Do not share it with anyone.".format(key) + bcolors.ENDC)
+            # print(bcolors.BOLD + bcolors.OKBLUE + "Your secret key is {}. Do not share it with anyone.".format(key) + bcolors.ENDC)
             print("\n******** Done ********\n")
 
         elif choice == '2':
@@ -148,7 +148,7 @@ def main(argv):
                     """
                     Reading messages received on your group
                     """
-                    print(bcolors.BOLD + bcolors.WARNING + "Below are the messages received on your group : "+bcolor.ENDC)
+                    print(bcolors.BOLD + bcolors.WARNING + "Below are the messages received on your group : "+bcolors.ENDC)
                     for message in member.message_history:
                         print("\"{}\" - Message received from {}".format(message[0], message[1]))                
 
