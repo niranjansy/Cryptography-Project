@@ -1,3 +1,4 @@
+from colors import bcolors
 """This function shall encrypt the binary string"""
 
 def encrypt(binary_string,key):
@@ -14,16 +15,16 @@ def encrypt(binary_string,key):
 
     print("****** Printing encryption process *******")
 
-    print("Key : " + key)
-    print("Replicated key   : " + replicated_key[:len(binary_string)])
-    print("Binary String    : " + binary_string)
+    print(bcolors.BOLD + bcolors.OKGREEN + "Key : " + bcolors.ENDC + key)
+    print(bcolors.BOLD + bcolors.OKGREEN + "Replicated key   : " + bcolors.ENDC + replicated_key[:len(binary_string)])
+    print(bcolors.BOLD + bcolors.OKGREEN + "Binary String    : " + bcolors.ENDC + binary_string)
     
     ptr = 0
     for c in binary_string:
         encrypted_string = encrypted_string + str(int(c)^int(replicated_key[ptr]))
         ptr=ptr+1
     
-    print("Encrypted String : " + encrypted_string)
+    print(bcolors.BOLD + bcolors.OKGREEN + "Encrypted String : " + bcolors.ENDC + encrypted_string)
 
     print("************************************\n")
     

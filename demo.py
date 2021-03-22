@@ -2,6 +2,7 @@ from group import Group
 from member import Member
 from absl import app
 from absl import flags
+from colors import bcolors
 import random
 
 FLAGS = flags.FLAGS
@@ -21,10 +22,10 @@ def main(argv):
     print("\n************* Welcome *************\n")
     while True:
         print_members_and_groups()
-        print("\nPlease select an action from the following:")
-        print("1. Sign Up as a New Member")
-        print("2. Log In as an Existing Member")
-        print("3. Exit")
+        print(bcolors.BOLD + bcolors.WARNING + "\nPlease select an action from the following:" + bcolors.ENDC)
+        print(bcolors.BOLD + bcolors.WARNING + "1. Sign Up as a New Member" + bcolors.ENDC)
+        print(bcolors.BOLD + bcolors.WARNING + "2. Log In as an Existing Member" + bcolors.ENDC)
+        print(bcolors.BOLD + bcolors.WARNING + "3. Exit" + bcolors.ENDC)
 
         choice = input("\nEnter your choice of action : ")
 
@@ -39,19 +40,19 @@ def main(argv):
             m = Member(id=mem_id, secret_key=key)
             members[mem_id] = m
             print("Member created with member id : ", mem_id)
-            print("Your secret key is {}. Do not share it with anyone.".format(key))
+            print(bcolors.BOLD + bcolors.OKBLUE + "Your secret key is {}. Do not share it with anyone.".format(key) + bcolors.ENDC)
             print("\n******** Done ********\n")
 
         elif choice == '2':
             """
             Signing in as existing member by entering member id.
             """
-            mem_id = int(input("\nEnter your member ID : "))
+            mem_id = int(input(bcolors.BOLD + bcolors.WARNING + "\nEnter your member ID : "+bcolors.ENDC))
             if mem_id not in members.keys():
-                print("Invalid member ID!! Please try again.")
+                print(bcolors.BOLD + bcolors.ERROR + "Invalid member ID!! Please try again."+bcolors.ENDC)
                 continue
 
-            print("\nLogging in as member {}....".format(mem_id))
+            print(bcolors.BOLD + bcolors.OKGREEN + "\nLogging in as member {}....".format(mem_id)+bcolors.ENDC)
 
             print("\n******** Welcome member {}  ********\n".format(mem_id))
 
@@ -61,15 +62,15 @@ def main(argv):
 
                 print_members_and_groups()
 
-                print("\nPlease select an action from the following: ")
-                print("1. Create a new group")
-                print("2. Add member to group")
-                print("3. Remove member from group")
-                print("4. Send message")
-                print("5. Read messages")
-                print("6. Logout\n")
+                print(bcolors.BOLD + bcolors.WARNING + "\nPlease select an action from the following: "+bcolors.ENDC)
+                print(bcolors.BOLD + bcolors.WARNING + "1. Create a new group"+bcolors.ENDC)
+                print(bcolors.BOLD + bcolors.WARNING + "2. Add member to group"+bcolors.ENDC)
+                print(bcolors.BOLD + bcolors.WARNING + "3. Remove member from group"+bcolors.ENDC)
+                print(bcolors.BOLD + bcolors.WARNING + "4. Send message"+bcolors.ENDC)
+                print(bcolors.BOLD + bcolors.WARNING + "5. Read messages"+bcolors.ENDC)
+                print(bcolors.BOLD + bcolors.WARNING + "6. Logout\n"+bcolors.ENDC)
 
-                option = input("Enter your choice of action : ")
+                option = input(bcolors.BOLD + bcolors.WARNING + "Enter your choice of action : "+bcolors.ENDC)
 
                 if option == '1':
                     """
@@ -117,10 +118,10 @@ def main(argv):
                     """
                     Sending a message, intra-group or inter-group
                     """
-                    message = input("Enter the message to send : ")
-                    g = int(input("Enter the ID of the group to which message is to be sent : "))
+                    message = input(bcolors.BOLD + bcolors.WARNING + "Enter the message to send : " + bcolors.ENDC)
+                    g = int(input(bcolors.BOLD + bcolors.WARNING + "Enter the ID of the group to which message is to be sent : " + bcolors.ENDC))
                     if g not in groups.keys():
-                        print("Invalid Group ID entered!!")
+                        print(bcolors.BOLD + bcolors.ERROR + "Invalid Group ID entered!!" + bcolors.ENDC)
                         continue
                     
                     group = groups[g]
@@ -140,16 +141,16 @@ def main(argv):
                     """
                     Reading messages received on your group
                     """
-                    print("Below are the messages received on your group : ")
+                    print(bcolors.BOLD + bcolors.WARNING + "Below are the messages received on your group : "+bcolor.ENDC)
                     for message in member.message_history:
                         print("\"{}\" - Message received from {}".format(message[0], message[1]))                
 
                 elif option == '6':
-                    print("\n******** Logging out the member ********\n")
+                    print(bcolors.BOLD + bcolors.OKGREEN + "\n******** Logging out the member ********\n"+bcolors.ENDC)
                     break
 
                 else:
-                    print("Invalid choice!! Please try again.")
+                    print(bcolors.BOLD + bcolors.ERROR + "Invalid choice!! Please try again."+bcolors.ENDC)
                 
 
 
@@ -158,7 +159,7 @@ def main(argv):
             break
 
         else:
-            print("Invalid choice!! Please try again.")
+            print(bcolors.BOLD + bcolors.ERROR + "Invalid choice!! Please try again." + bcolors.ENDC)
 
 if __name__ == '__main__':
   app.run(main)

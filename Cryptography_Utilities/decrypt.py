@@ -1,3 +1,4 @@
+from colors import bcolors
 """This function shall decrypt the binary string"""
 
 def decrypt(binary_string,key):
@@ -13,8 +14,8 @@ def decrypt(binary_string,key):
     """Printing decryption process"""
 
     print("****** Printing decryption process *******")
-    print("Key : " + key)
-    print("Replicated key   : " + replicated_key[:len(binary_string)])
+    print(bcolors.BOLD + bcolors.OKGREEN + "Key : " +bcolors.ENDC + key)
+    print(bcolors.BOLD + bcolors.OKGREEN + "Replicated key   : " + bcolors.ENDC + replicated_key[:len(binary_string)])
     print("Encrypted String    : " + binary_string)
     
     ptr = 0
@@ -22,7 +23,7 @@ def decrypt(binary_string,key):
         decrypted_string = decrypted_string + str(int(c)^int(replicated_key[ptr]))
         ptr=ptr+1
     
-    print("Decrypted String : " + decrypted_string)
+    print(bcolors.BOLD + bcolors.OKGREEN + "Decrypted String : " + bcolors.ENDC + decrypted_string)
     print("************************************\n")
 
     """Returning decrypted string"""

@@ -4,6 +4,7 @@ from Cryptography_Utilities.decode import decode
 from Cryptography_Utilities.decrypt import decrypt
 from Polynomials.evaluate_polynomial import evaluate_polynomial
 from Cryptography_Utilities.decrypt_polynomial import decrypt_polynomial
+from colors import bcolors
 
 class Member():
 
@@ -46,7 +47,7 @@ class Member():
             """
             Intra Group Message
             """
-            print("Sending intra-group message from member {} to group {}: {}\n".format(self.id, group.id, message))
+            print(bcolors.BOLD + bcolors.WARNING + "Sending intra-group message from member {} to group {}: {}\n".format(self.id, group.id, message) + bcolors.ENDC)
 
             group_polynomial = group.get_group_polynomial()
             group_key = evaluate_polynomial(group_polynomial, self.secret_key)
@@ -67,11 +68,11 @@ class Member():
         """
 
         if self.group_id != group.id:
-            print("You are not a member of group ", group.id, "!! \nCannot read messages of the group!!\n")
+            print(bcolors.BOLD + bcolors.ERROR + "You are not a member of group ", group.id, "!! \nCannot read messages of the group!!\n" + bcolors.ENDC)
             return False
 
         if len(group.messages) == 0:
-            print("No messages have been sent to the group.\n")
+            print(bcolors.BOLD + bcolors.ERROR + "No messages have been sent to the group.\n" + bcolors.ENDC)
             return False
 
         group_polynomial = group.get_group_polynomial()
@@ -81,7 +82,7 @@ class Member():
         decrypted_message = decrypt(encrypted_message, encoded_key)
         decoded_message = decode(decrypted_message)
 
-        print("Message read by member {}: {}\n".format(self.id, decoded_message))
+        print(bcolors.BOLD + bcolors.OKGREEN + "Message read by member {}: {}\n".format(self.id, decoded_message) + bcolors.ENDC)
 
         self.message_history.append((decoded_message, "Intra-Group"))
 
@@ -94,11 +95,11 @@ class Member():
         """
 
         if self.group_id != group.id:
-            print("You are not a member of group ", group.id, "!! \nCannot read messages of the group!!\n")
+            print(bcolors.BOLD + bcolors.ERROR + "You are not a member of group ", group.id, "!! \nCannot read messages of the group!!\n" + bcolors.ENDC)
             return False
 
         if len(group.intergroup_messages) == 0:
-            print("No messages have been sent to the group.\n")
+            print(bcolors.BOLD + bcolors.ERROR + "No messages have been sent to the group.\n" + bcolors.ENDC)
             return False
 
         encrypted_message = group.intergroup_messages[-1][0]

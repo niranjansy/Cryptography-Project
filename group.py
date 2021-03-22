@@ -3,6 +3,7 @@ from Polynomials.generate_polynomial import gen_intergroup_polynomial
 from Polynomials.evaluate_polynomial import evaluate_polynomial
 from Cryptography_Utilities.encrypt_polynomial import encrypt_polynomial
 from Cryptography_Utilities.decrypt_polynomial import decrypt_polynomial
+from colors import bcolors
 # import member
 
 class Group():
@@ -40,10 +41,10 @@ class Group():
         member.set_group_id(self.id)
         self.secret_keys.append(member_key)
 
-        print("\nMember {} with secret key {} added to Group {}.".format(member_id, member_key, self.id))
+        print(bcolors.BOLD + bcolors.OKGREEN + "\nMember {} with secret key {} added to Group {}.".format(member_id, member_key, self.id) + bcolors.ENDC)
         
         if(len(self.secret_keys) == 1):
-            print("\nMaking ",member_id," the admin of the group: ",self.id,"\n")
+            print(bcolors.BOLD + bcolors.OKGREEN + "\nMaking ",member_id," the admin of the group: ",self.id,"\n" + bcolors.ENDC)
             self.admin_id = member_id
 
         # Generating new group polynomial and new group key
@@ -54,7 +55,7 @@ class Group():
         intergroup_polynomial = gen_intergroup_polynomial(len(self.secret_keys))
         encrpyted_intergroup_polynomial = encrypt_polynomial(intergroup_polynomial, group_key)
         self.intergroup_polynomial = encrpyted_intergroup_polynomial
-        print("\nEncrypted Inter Group Polynomial : {}\n".format(self.intergroup_polynomial))
+        print(bcolors.BOLD + bcolors.OKGREEN + "\nEncrypted Inter Group Polynomial : " + bcolors.ENDC + self.intergroup_polynomial)
 
         return True
 
@@ -65,11 +66,11 @@ class Group():
         """
         
         if member_id not in self.members.keys():
-            print("\nMember {} is not part of Group {}".format(member_id, self.id))
-            print("\nCannot remove member") 
+            print(bcolors.BOLD + bcolors.ERROR +"\nMember {} is not part of Group {}".format(member_id, self.id) + bcolors.ENDC)
+            print(bcolors.BOLD + bcolors.ERROR +"\nCannot remove member" + bcolors.ENDC) 
             return False
         if(member_id == self.admin_id):
-            print("Admin of group cannot be removed")
+            print(bcolors.BOLD + bcolors.ERROR + "Admin of group cannot be removed" + bcolors.ENDC)
             return False
         
         print("\n****** Printing re-keying process *******")
@@ -78,7 +79,7 @@ class Group():
         member.set_group_id(None)
         self.secret_keys.remove(member.secret_key)
         
-        print("\nMember {} with secret key {} removed from Group {}.\n".format(member_id, member.secret_key, self.id))
+        print(bcolors.BOLD + bcolors.OKGREEN +"\nMember {} with secret key {} removed from Group {}.\n".format(member_id, member.secret_key, self.id) + bcolors.ENDC)
         
         # Generating new group polynomial and new group key
         self.group_polynomial = generate_polynomial(self.secret_keys)
@@ -88,7 +89,7 @@ class Group():
         intergroup_polynomial = gen_intergroup_polynomial(len(self.secret_keys))
         encrpyted_intergroup_polynomial = encrypt_polynomial(intergroup_polynomial, group_key)
         self.intergroup_polynomial = encrpyted_intergroup_polynomial
-        print("\nEncrypted Inter Group Polynomial : {}\n".format(self.intergroup_polynomial))
+        print(bcolors.BOLD + bcolors.OKGREEN +"\nEncrypted Inter Group Polynomial : {}\n".format(self.intergroup_polynomial) + bcolors.ENDC)
 
         return True
 
@@ -103,7 +104,7 @@ class Group():
         return self.group_polynomial
     
     def add_message_to_group(self, encrypted_message):
-        print("\nAdding encrypted message : ", encrypted_message, " to group\n")
+        print(bcolors.BOLD + bcolors.OKGREEN +"\nAdding encrypted message : " +  bcolors.ENDC + encrypted_message + " to group\n")
         self.messages.append(encrypted_message)    
 
     def request_intergroup_key(self, member_id):
@@ -115,11 +116,11 @@ class Group():
         group_key = evaluate_polynomial(self.group_polynomial, self.secret_keys[0])
         decrypted_polynomial = decrypt_polynomial(self.intergroup_polynomial, group_key)
         intergroup_key = evaluate_polynomial(decrypted_polynomial, member_id)
-        print("Evaluated inter group key : ", intergroup_key)
+        print(bcolors.BOLD + bcolors.OKGREEN + "Evaluated inter group key : " + bcolors.ENDC + intergroup_key)
 
         return intergroup_key
 
     def add_intergroup_message(self, encrypted_message, member_id):
-        print("\nAdding encrypted message {} from member {} to the group\n".format(encrypted_message, member_id))
+        print(bcolors.BOLD + bcolors.OKGREEN + "\nAdding encrypted message {} from member {} to the group\n".format(encrypted_message, member_id) + bcolors.ENDC)
         self.intergroup_messages.append((encrypted_message, member_id))
 

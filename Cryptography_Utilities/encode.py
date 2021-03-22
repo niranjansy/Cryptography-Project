@@ -1,3 +1,4 @@
+from colors import bcolors
 """This function encodes a string to binary""" 
 
 def encode(s):
@@ -20,8 +21,8 @@ def encode(s):
     """Displaying the process of encoding""" 
 
     print("***** Encoding Process ******")
-    print("String to encode : " + s)
-    print("Encoded string : " + str(encoded_binary_string))
+    print(bcolors.BOLD + bcolors.OKGREEN + "String to encode : " + bcolors.ENDC + s)
+    print(bcolors.BOLD + bcolors.OKGREEN + "Encoded string : "+ bcolors.ENDC + str(encoded_binary_string))
     print("*****************************\n")
 
     """Returning the encoded string"""

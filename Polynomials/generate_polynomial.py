@@ -5,6 +5,7 @@
 import random 
 from absl import app
 from absl import flags
+from colors import bcolors
 
 FLAGS = flags.FLAGS
 
@@ -36,11 +37,11 @@ def generate_polynomial (keys):
 
     # Randomly generating a group key 
     group_key = random.randint(2**FLAGS.l, 2**FLAGS.h)      # Generating a random number between 0 and 100. The range can be changed later.
-    print("Group key generated using random number generator : ", group_key)
+    print(bcolors.BOLD + bcolors.OKGREEN + "Group key generated using random number generator : " + bcolors.ENDC + str(group_key))
     # Adding the group key to the polynomial
     polynomial[0] += group_key
 
-    print("Group polynomial generated : ", get_printable(polynomial), "\n")
+    print(bcolors.BOLD + bcolors.OKGREEN + "Group polynomial generated : " + bcolors.ENDC + str(get_printable(polynomial)) + "\n")
 
     return polynomial
 
@@ -52,7 +53,7 @@ def gen_intergroup_polynomial(degree):
     for i in range(degree+1):
         polynomial.append(random.randint(2**FLAGS.l, 2**FLAGS.h))
     
-    print("Intergroup polynomial generated : ", get_printable(polynomial), "\n")
+    print(bcolors.BOLD + bcolors.OKGREEN + "Intergroup polynomial generated : " + bcolors.ENDC +  get_printable(polynomial))
     
     return polynomial
 

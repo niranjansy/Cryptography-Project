@@ -1,3 +1,4 @@
+from colors import bcolors
 """This function decodes a binary string""" 
 
 def decode(s):
@@ -15,8 +16,8 @@ def decode(s):
     """Displaying the process of decoding""" 
 
     print("***** Decoding Process ******")
-    print("Binary string to decode : " + s)
-    print("decoded string : " + decoded_string)
+    print(bcolors.BOLD + bcolors.OKGREEN + "Binary string to decode : "+ bcolors.ENDC + s)
+    print(bcolors.BOLD + bcolors.OKGREEN + "decoded string : "+ bcolors.ENDC + decoded_string)
     print("*****************************\n")
 
     """Returning the decoded string"""
