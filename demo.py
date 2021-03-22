@@ -31,13 +31,13 @@ def main(argv):
 
         if choice == '1':
             """
-            Adding a new member.
+            Creating a new member.
             """
             print("\n******** Creating Member ********\n")
             mem_id = len(members) + 1
             # key = int(input("Choose a secret key for the member : "))
-            key = random.randint(2**FLAGS.l, 2**FLAGS.h)
-            m = Member(id=mem_id, secret_key=key)
+            # key = random.randint(2**FLAGS.l, 2**FLAGS.h)
+            m = Member(id=mem_id)
             members[mem_id] = m
             print("Member created with member id : ", mem_id)
             print(bcolors.BOLD + bcolors.OKBLUE + "Your secret key is {}. Do not share it with anyone.".format(key) + bcolors.ENDC)
@@ -92,11 +92,15 @@ def main(argv):
                     """
                     Adding a member to a group. This is possible only for a group admin.
                     """
-                    g = int(input("Select group : "))
-                    m = int(input("Select member : "))
-                    if g not in groups.keys() or m not in members.keys():
-                        print("Invalid Group or Member ID entered!!")
+                    if member.group_id == None:
+                        print("\nYou are not a member of any group!!")
                         continue
+
+                    m = int(input("Select member : "))
+                    if m not in members.keys():
+                        print("Invalid Member ID entered!!")
+                        continue
+                    g = member.group_id
                     group = groups[g]
                     mem = members[m]
                     member.add_member_to_group(mem, group)
@@ -105,11 +109,14 @@ def main(argv):
                     """
                     Removing a member from a group. This is possible only for a group admin
                     """
-                    g = int(input("Select group : "))
-                    m = int(input("Select member : "))
-                    if g not in groups.keys() or m not in members.keys():
-                        print("Invalid Group or Member ID entered!!")
+                    if member.group_id == None:
+                        print("\nYou are not a member of any group!!")
                         continue
+                    m = int(input("Select member : "))
+                    if m not in members.keys():
+                        print("Invalid Member ID entered!!")
+                        continue
+                    g = member.group_id
                     group = groups[g]
                     mem = members[m]
                     member.remove_member_from_group(mem, group)

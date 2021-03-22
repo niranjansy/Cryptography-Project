@@ -8,9 +8,9 @@ from colors import bcolors
 
 class Member():
 
-    def __init__(self, id, secret_key):
+    def __init__(self, id):
         self.id = id
-        self.secret_key = secret_key
+        self.secret_key = None
         self.group_id = None
         self.message_history = []
 
