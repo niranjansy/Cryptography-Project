@@ -16,7 +16,7 @@ def decrypt(binary_string,key):
     print("****** Printing decryption process *******")
     print(bcolors.BOLD + bcolors.OKGREEN + "Key : " +bcolors.ENDC + key)
     print(bcolors.BOLD + bcolors.OKGREEN + "Replicated key   : " + bcolors.ENDC + replicated_key[:len(binary_string)])
-    print("Encrypted String    : " + binary_string)
+    print(bcolors.BOLD + bcolors.OKGREEN + "Encrypted String    : "+ bcolors.ENDC + binary_string)
     
     ptr = 0
     for c in binary_string:
