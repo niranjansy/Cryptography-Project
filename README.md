@@ -29,6 +29,18 @@ Hence we shall now XOR the replicated string and encoded string bit by bit.
 
 ## Note: In the following diagrams, Let encryption function be E(X,K) where X and K are binary strings and Encoding algorithm be Encode(String)
 
+## Intra Group Communication Diagram 
+![Intra Group Communication](Images/Intra_group.png)
+
+## Intra Group Communication Example
+![Intra Group Communication](Images/Intra_demo.png)
+
+## Inter Group Communication Diagram
+![Intra Group Communication](Images/Inter_group.png)
+
+## Inter Group Communication Example
+![Intra Group Communication](Images/Inter_demo.png)
+
 # Running Instructions
 ```
 pip install absl-py
