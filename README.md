@@ -23,7 +23,7 @@ of encoded message
 - Replicated key : 1011010 1011010 1011010 1011010 1011010 1011010
 - Encoded String : 1000001 1110100 1110100 1100001 1100011 1101011
 - The encryption algorithm we have used across our project is the vernam cipher.
-- 
+
 Hence we shall now XOR the replicated string and encoded string bit by bit.
 - Encrypted String : 001101101011100101110011101101110010110001 , We XOR with same key to decrypt.
 
