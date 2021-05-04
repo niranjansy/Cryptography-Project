@@ -33,7 +33,7 @@ Hence we shall now XOR the replicated string and encoded string bit by bit.
 ![Intra Group Communication](Images/Intra_group.png)
 
 ## Intra Group Communication Example
-![Intra Group Communication](Images/Intra_demo.png)
+![Intra Group Communication](Images/Intra_group_demo.png)
 
 ## Inter Group Communication Diagram
 ![Intra Group Communication](Images/Inter_group.png)
